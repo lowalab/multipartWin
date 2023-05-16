@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <vector>
 #include <map>
-#include <direct.h>		//mkdir
+#include <filesystem>  // C++17부터 표준 라이브러리에 포함됨
 
 class HeaderItem {
 public:
@@ -198,21 +198,20 @@ public:
 
 void createFolder(std::string &strFilename)
 {
-	size_t pos = 0;
-	while (true)
-	{
-		pos = strFilename.find("/", pos + 1);
-		if (pos == std::string::npos) break;
-		//std::cout << strFilename.substr(0, pos) << std::endl;
-		int ret = _mkdir(strFilename.substr(0, pos).c_str());
-
-		//std::cout << strFilename.substr(0, pos) <<  ret << std::endl;
+	size_t pos = strFilename.find_last_of("/");
+	if (pos == std::string::npos) return;
+	std::string strFolder = strFilename.substr(0, pos);
+	if (!std::filesystem::exists(strFolder)) {
+		if (!std::filesystem::create_directories(strFolder)) {
+			std::cout << "Failed to create folder: " << strFolder << std::endl;
+			return;
+		}
 	}
 }
 
 int main()
 {
-	std::string strPackageName = "sls.pkg"; // run3tv_app.multipart   // App.pkg
+	std::string strPackageName = "sls.pkg"; // run3tv_app.multipart   // App.pkg // sls.pkg
 	std::ifstream file(strPackageName, std::ios::binary);
 	std::stringstream ss;
 	ss << file.rdbuf();
