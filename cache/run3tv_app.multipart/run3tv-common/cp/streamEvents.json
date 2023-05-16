@@ -1,9 +1,0 @@
-{
-    "Event_1": {
-        "schemeIdUri": "tv:eventstream.run3tv.org",
-        "value": "appManagement",
-        "eventTime": 1450.6,
-        "id": 60,
-        "data": "action=forcedLoad&appName=trigger-1&propertiesBase58="
-    }
-}
