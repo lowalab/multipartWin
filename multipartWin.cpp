@@ -212,7 +212,7 @@ void createFolder(std::string &strFilename)
 
 int main()
 {
-	std::string strPackageName = "sls.pkg";
+	std::string strPackageName = "sls.pkg"; // run3tv_app.multipart   // App.pkg
 	std::ifstream file(strPackageName, std::ios::binary);
 	std::stringstream ss;
 	ss << file.rdbuf();
