@@ -1,0 +1,35 @@
+{
+    "group-1": [
+        {"request": {"method": "org.atsc.setRMPURL", "params": {"operation": "startRmp", "rmpUrl": "https://62e850a310854b85844d89566de1bc38.mediatailor.us-east-1.amazonaws.com/v1/dash/99247e89c7677df85a85aabdd3256ffe02a60196/peacock-cmaf-dash-sle-4s-011421/Content/CMAF_CBC-4s-v2/Live/channel(NamanTestStream747d999c2b5)/60_master_2hr.mpd?aws.sessionId=ce99d4ad-b348-4be6-80f6-135b9e0aa742"}}, "description": {"tc-id": "9.7.3","name":"Set RMP NBCU"}},
+        {"ssai": {"content": "https://62e850a310854b85844d89566de1bc38.mediatailor.us-east-1.amazonaws.com/v1/dash/99247e89c7677df85a85aabdd3256ffe02a60196/peacock-cmaf-dash-sle-4s-011421/Content/CMAF_CBC-4s-v2/Live/channel(NamanTestStream747d999c2b5)/60_master_2hr.mpd?aws.sessionId=ce99d4ad-b348-4be6-80f6-135b9e0aa742", "type": "dash"}, "description": {"tc-id": "G16S01T03", "name": "Play AMP SSAI"}},
+        {"request": {"method": "org.atsc.query.service"}, "description": {"tc-id": "G01S01T01", "name": "VALID SCHEMA"}},
+        {"eval": "${navigator.userAgent}", "description": {"tc-id": "G01S01T02", "name": "User Agent"}},
+        {"switch": "qrcode", "description": {"tc-id": "QR Code Display", "name": "Switch"}},
+        {"switch": "console", "description": {"tc-id": "Console Logs Display", "name": "Switch"}},
+        {"switch": "console-top", "description": {"tc-id": "Console Top", "name": "Switch"}},
+
+        {"switch": "console", "description": {"tc-id": "1XXXXXXXXXXXXX - YYYYYYYYYYYABCD", "name": "Switch"}},
+        {"switch": "console", "description": {"tc-id": "2XXXXXXXXXXXXX - YYYYYYYYYYYABCD", "name": "Switch"}},
+        {"switch": "console", "description": {"tc-id": "3XXXXXXXXXXXXX - YYYYYYYYYYYABCD", "name": "Switch"}},
+        {"switch": "console", "description": {"tc-id": "4XXXXXXXXXXXXX - YYYYYYYYYYYABCD", "name": "Switch"}},
+        {"switch": "console", "description": {"tc-id": "5XXXXXXXXXXXXX - YYYYYYYYYYYABCD", "name": "Switch"}},
+        {"switch": "console", "description": {"tc-id": "6XXXXXXXXXXXXX - YYYYYYYYYYYABCD", "name": "Switch"}},
+        {"switch": "console", "description": {"tc-id": "7XXXXXXXXXXXXX - YYYYYYYYYYYABCD", "name": "Switch"}},
+        {"switch": "console", "description": {"tc-id": "8XXXXXXXXXXXXX - YYYYYYYYYYYABCD", "name": "Switch"}},
+        {"switch": "console", "description": {"tc-id": "9XXXXXXXXXXXXX - YYYYYYYYYYYABCD", "name": "Switch"}}
+    ],
+    "group-16": [
+        {"pre-dai": {"vast": "https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ct%3Dlinear&correlator=", "content": "https://s3.amazonaws.com/feeds.atsc3-modelmarket.com/vod/dash/webvtt-dash1s-avc/manifest.mpd", "type": "dash"}, "description": {"tc-id": "G16S01T01", "name": "Play Google DAI"}}
+    ],
+    "group-17": [
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["xlinkResolution"]}}, "description": {"tc-id": "G01S02T01a", "name": "xlinkResolution - SUBSCRIBE"}},
+        {"linear-dai": [{"url": "/srv?xlink=<xlink>", "xlink": "urn:xbc4399FB77-3939EA47"}], "auto-subscribe": true, "description": {"tc-id": "G17S01T01", "name": "Single xLink"}},
+        {"linear-dai": [{"url": "/srv?xlink=generic"}], "description": {"tc-id": "G17S01T02", "name": "No xLink Filter"}},
+        {"linear-dai": [], "description": {"tc-id": "G17S01T02", "name": "Default xLink"}},
+        {"description": {"tc-id": "MH-T01", "name": "60s 1920x1080 proxy"}, "pre-dai": {"vast": "/bc890996d9a603c411f34a2eccef4ce3", "content": "http://rdmedia.bbc.co.uk/dash/ondemand/testcard/1/client_manifest-events.mpd", "type": "dash"}},
+        {"description": {"tc-id": "MH-T01", "name": "60s 1920x1080"}, "pre-dai": {"vast": "https://v.mdhv.io/teqaAnCJrOHg0XXEBCuNcQcYIEth?dur=60&dim=1920x1080&ifa=RAJMACBOOK-001&xid=2022-08-12-1400&br=10000&gdpr=0&coppa=0&us_privacy=1---&app=DAI-TEST-APP&fmt=vast2", "content": "http://rdmedia.bbc.co.uk/dash/ondemand/testcard/1/client_manifest-events.mpd", "type": "dash"}}
+    ],
+    "group-18": [
+        {"redirect": {"url": "http://localhost:5001/run3tv-common/", "params": {"wsURL": "${$.query.get('wsURL')}", "appName": "leadgen"}}, "description": {"tc-id": "G18S01T01", "name": "Redirect - Test App"}}
+    ]
+}

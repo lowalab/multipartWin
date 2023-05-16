@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadataEnvelope xmlns="urn:3gpp:metadata:2005:MBMS:envelope">
+  <item metadataURI="run3tv-common/unit.min.js.LICENSE.txt" version="0" contentType="text/plain" contentLength="5174"/>
+  <item metadataURI="run3tv-common/style-old.css" version="0" contentType="text/css" contentLength="1678"/>
+  <item metadataURI="run3tv-common/unit.min.js" version="0" contentType="application/javascript" contentLength="892811"/>
+  <item metadataURI="run3tv-common/favicon.png" version="0" contentType="image/png" contentLength="6908"/>
+  <item metadataURI="run3tv-common/cp/notifyList.json" version="0" contentType="application/json" contentLength="471"/>
+  <item metadataURI="run3tv-common/cp/streamEvents.json" version="0" contentType="application/json" contentLength="231"/>
+  <item metadataURI="run3tv-common/cp/proxy.json" version="0" contentType="application/json" contentLength="226"/>
+  <item metadataURI="run3tv-common/cp/index.html" version="0" contentType="text/html" contentLength="10418"/>
+  <item metadataURI="run3tv-common/.DS_Store" version="0" contentType="application/octet-stream" contentLength="6148"/>
+  <item metadataURI="run3tv-common/style.css" version="0" contentType="text/css" contentLength="2112"/>
+  <item metadataURI="run3tv-common/favicon.ico" version="0" contentType="image/vnd.microsoft.icon" contentLength="15406"/>
+  <item metadataURI="run3tv-common/config.js" version="0" contentType="application/javascript" contentLength="753"/>
+  <item metadataURI="run3tv-common/2022-cmd.json" version="0" contentType="application/json" contentLength="27717"/>
+  <item metadataURI="run3tv-common/index.html" version="0" contentType="text/html" contentLength="941"/>
+  <item metadataURI="run3tv-common/cmd.json" version="0" contentType="application/json" contentLength="4335"/>
+  <item metadataURI="__MACOSX/run3tv-common/._.DS_Store" version="0" contentType="application/octet-stream" contentLength="120"/>
+</metadataEnvelope>
+

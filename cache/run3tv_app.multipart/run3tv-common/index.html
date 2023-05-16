@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Unit</title>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+<link rel="stylesheet" href="style.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-09R681LBSQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-09R681LBSQ');
+</script>
+</head>
+<body>
+<video id="vid" crossorigin="anonymous"></video><!-- // amp video element -->
+<div id="content">
+    <div id="request"><canvas id="qrnav"></canvas><br><div id="nav"></div></div>
+    <div id="response"><canvas id="qresp"></canvas><br><div id="res"></div></div>
+    <div id="notify"><canvas id="qrmsg"></canvas><br><div id="msg"></div></div>
+</div>
+<div id="history"></div>
+<script src="config.js"></script>
+<script src="unit.min.js"></script>
+</body>
+</html>

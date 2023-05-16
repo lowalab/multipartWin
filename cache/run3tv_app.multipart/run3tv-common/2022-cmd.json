@@ -1,0 +1,198 @@
+{
+    "General": [
+        {"eval": "${navigator.userAgent}", "description": {"tc-id": "9.x.x", "name": "User Agent"}},
+        {"switch": "qrcode", "description": {"tc-id": "QR Code Display", "name": "Switch"}},
+        {"switch": "console", "description": {"tc-id": "Console Logs Display", "name": "Switch"}},
+        {"switch": "console-top", "description": {"tc-id": "Console Top", "name": "Switch"}}
+    ],
+    "GEKv1": [
+        {"request": {"method": "org.atsc.setRMPURL", "params": {"operation": "stopRmp"}}, "description": {"tc-id": "9.7.3","name":"Stop RMP"}},
+        {"request": {"method": "org.atsc.setRMPURL", "params": {"operation": "startRmp", "rmpurl": "http://192.168.2.42:80/re/put/Stream01/manifest.mpd"}}, "description": {"tc-id": "9.7.3","name":"Set RMP Stream01"}},
+        {"request": {"method": "org.atsc.setRMPURL", "params": {"operation": "startRmp", "rmpurl": "http://192.168.2.42:80/re/put/Stream02/manifest.mpd"}}, "description": {"tc-id": "9.7.3","name":"Set RMP Stream02"}},
+        {"request": {"method": "org.atsc.setRMPURL", "params": {"operation": "startRmp", "rmpurl": "https://livesim.dashif.org/livesim/periods_60/continuous_1/testpic_2s/Manifest.mpd"}}, "description": {"tc-id": "9.7.3","name":"Set RMP dashloivesim"}},
+        {"request": {"method": "org.atsc.setRMPURL", "params": {"operation": "stopRmp"}}, "description": {"tc-id": "9.7.3","name":"Stop RMP"}},
+        {"request": {"method": "org.atsc.setRMPURL", "params": {"operation": "resumeService"}}, "description": {"tc-id": "9.7.3","name":"Resume Service"}}
+    ],
+    "Device Info": [
+        {"request": {"method": "org.atsc.query.baseURI"}, "description": {"tc-id": "9.2.7","name":"Query baseURI"}},
+        {"request": {"method": "org.atsc.query.deviceInfo"}, "description": {"tc-id": "9.13","name":"Query DeviceInfo"}},
+        {"request": {"method": "org.atsc.query.deviceInfo", "params": {"deviceInfoProperties": ["deviceSupportedWebSocketAPIs","deviceSupportedDRMs","deviceCapabilities"]}}, "description": {"tc-id": "9.13","name":"Query DeviceInfo, additional"}},
+        {"request": {"method": "org.atsc.query.deviceInfo", "params": {"deviceInfoProperties": ["us.aspect:properties"]}}, "description": {"tc-id": "9.13","name":"Query DeviceInfo, us props"}}
+    ],
+    "Service Guide ESG": [
+        {"request": {"method": "org.atsc.query.serviceGuideUrls"}, "description": {"tc-id": "9.2.9","name":"Query Service Guide"}},
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["serviceGuideChange"]}}, "description": {"tc-id": "9.3.10", "name": "subscribe: service guide"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["serviceGuideChange"]}}, "description": {"tc-id": "9.3.10", "name": "unsubscribe: service guide"}}
+    ],
+    "Signalling": [
+        {"request": {"method": "org.atsc.query.signaling", "params": {"nameList": ["ALL"]}}, "description": {"tc-id": "9.2.10","name":"Query Signalling [ALL]"}},
+        {"request": {"method": "org.atsc.query.signaling", "params": {"nameList": ["1"]}}, "description": {"tc-id": "9.2.10","name":"[1 (SLT)]"}},
+        {"request": {"method": "org.atsc.query.signaling", "params": {"nameList": ["3"]}}, "description": {"tc-id": "9.2.10","name":"[3 (SystemTime)]"}},
+        {"request": {"method": "org.atsc.query.signaling", "params": {"nameList": ["MPD"]}}, "description": {"tc-id": "9.2.10","name":"[MPD]"}},
+        {"request": {"method": "org.atsc.query.signaling", "params": {"nameList": ["USBD"]}}, "description": {"tc-id": "9.2.10","name":"[USBD]"}},
+        {"request": {"method": "org.atsc.query.signaling", "params": {"nameList": ["HELD"]}}, "description": {"tc-id": "9.2.10","name":"[HELD]"}},
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["signalingData"]}}, "description": {"tc-id": "9.3.11", "name": "subscribe: signalling"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["signalingData"]}}, "description": {"tc-id": "9.3.11", "name": "unsubscribe: signalling"}},
+        {"request": {"method": "org.atsc.query.signaling", "params": {"nameList": ["STSID"]}}, "description": {"tc-id": "9.2.10","name":"[STSID]"}},
+        {"request": {"method": "org.atsc.query.signaling", "params": {"nameList": ["RD"]}}, "description": {"tc-id": "9.2.10","name":"[RD (RouteDash)]"}},
+        {"request": {"method": "org.atsc.query.signaling", "params": {"nameList": ["DWD"]}}, "description": {"tc-id": "9.2.10","name":"[DWD]"}},
+        {"request": {"method": "org.atsc.query.signaling", "params": {"nameList": ["AEI"]}}, "description": {"tc-id": "9.2.10","name":"[AEI]"}},
+        {"request": {"method": "org.atsc.query.signaling", "params": {"nameList": ["APD"]}}, "description": {"tc-id": "9.2.10","name":"[APD]"}},
+        {"request": {"method": "org.atsc.query.signaling", "params": {"nameList": ["MMT"]}}, "description": {"tc-id": "9.2.10","name":"[MMT]"}},
+        {"request": {"method": "org.atsc.query.signaling", "params": {"nameList": ["PAT"]}}, "description": {"tc-id": "9.2.10","name":"[PAT]"}},
+        {"request": {"method": "org.atsc.query.signaling", "params": {"nameList": ["MPT"]}}, "description": {"tc-id": "9.2.10","name":"[MPT]"}},
+        {"request": {"method": "org.atsc.query.signaling", "params": {"nameList": ["MPIT"]}}, "description": {"tc-id": "9.2.10","name":"[MPIT]"}},
+        {"request": {"method": "org.atsc.query.signaling", "params": {"nameList": ["CRIT"]}}, "description": {"tc-id": "9.2.10","name":"[CRIT]"}},
+        {"request": {"method": "org.atsc.query.signaling", "params": {"nameList": ["DCIT"]}}, "description": {"tc-id": "9.2.10","name":"[DCIT]"}},
+        {"request": {"method": "org.atsc.query.signaling", "params": {"nameList": ["EMSG"]}}, "description": {"tc-id": "9.2.10","name":"[EMSG]"}},
+        {"request": {"method": "org.atsc.query.signaling", "params": {"nameList": ["EVTI"]}}, "description": {"tc-id": "9.2.10","name":"[EVTI]"}},
+        {"request": {"method": "org.atsc.query.signaling", "params": {"nameList": ["RSAT"]}}, "description": {"tc-id": "9.2.10","name":"[RSAT]"}}
+
+    ],
+    "ratings": [
+        {"request": {"method": "org.atsc.query.ratingLevel"}, "description": {"tc-id": "9.2.1","name":"Query Ratings Level"}},
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["ratingBlock"]}}, "description": {"tc-id": "9.3.2", "name": "subscribe: rating"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["ratingBlock"]}}, "description": {"tc-id": "9.3.2", "name": "unsubscribe: rating"}}
+    ],
+    "closed captions": [
+        {"request": {"method": "org.atsc.query.cc"}, "description": {"tc-id": "9.2.2","name":"Query Close Captions Status"}},
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["captionState"]}}, "description": {"tc-id": "9.3.4", "name": "subscribe: caption"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["captionState"]}}, "description": {"tc-id": "9.3.4", "name": "unsubscribe: caption"}},
+        {"request": {"method": "org.atsc.query.captionDisplay"}, "description": {"tc-id": "9.2.4","name":"Query Caption Display"}},
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["captionDisplayPref"]}}, "description": {"tc-id": "9.3.6", "name": "subscribe: caption DisplayPref"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["captionDisplayPref"]}}, "description": {"tc-id": "9.3.6", "name": "unsubscribe: caption DisplayPref"}}
+    ],
+    "Service Handing": [
+        {"request": {"method": "org.atsc.query.service"}, "description": {"tc-id": "9.2.3","name":"Query ServiceId"}},
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["serviceChange"]}}, "description": {"tc-id": "9.3.3", "name": "subscribe: service change"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["serviceChange"]}}, "description": {"tc-id": "9.3.3", "name": "unsubscribe: service change"}},
+        {"request": {"method": "org.atsc.acquire.service", "params": {"svcToAcquire": "https://doi.org/10.5239/8A23-2B0B"}}, "description": {"tc-id": "9.7.1","name":"Acquire Service"}}
+    ],
+    "Languages Handling": [
+        {"request": {"method": "org.atsc.query.languages"}, "description": {"tc-id": "9.2.4","name":"Query Language Pref"}},
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["langPref"]}}, "description": {"tc-id": "9.3.5", "name": "subscribe: lang Pref"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["langPref"]}}, "description": {"tc-id": "9.3.5", "name": "unsubscribe: lang Pref"}}
+    ],
+    "Audio Accessibility": [
+        {"request": {"method": "org.atsc.query.audioAccessibilityPref"}, "description": {"tc-id": "9.2.6","name":"Query Audio Accessibility Pref"}},
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["audioAccessibilityPref"]}}, "description": {"tc-id": "9.3.7", "name": "subscribe: Audio Accessibility"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["audioAccessibilityPref"]}}, "description": {"tc-id": "9.3.7", "name": "unsubscribe: Audio Accessibility"}}
+    ],
+    "Alerting": [
+        {"request": {"method": "org.atsc.query.alerting", "params": {"alertingTypes": ["AEAT"]}}, "description": {"tc-id": "9.2.8","name":"Query Alerting AEAT"}},
+        {"request": {"method": "org.atsc.query.alerting", "params": {"alertingTypes": ["OSN"]}}, "description": {"tc-id": "9.2.8","name":"Query Alerting OSN"}},
+        {"request": {"method": "org.atsc.query.alerting", "params": {"alertingTypes": ["AEAT","OSN"]}}, "description": {"tc-id": "9.2.8","name":"Query Alerting BOTH"}},
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["alertingChange"]}}, "description": {"tc-id": "9.3.8", "name": "subscribe: alerting"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["alertingChange"]}}, "description": {"tc-id": "9.3.8", "name": "unsubscribe: alerting"}}
+    ],
+    "Dialog Enhancement": [
+        {"request": {"method": "org.atsc.query.dialogEnhancementPref"}, "description": {"tc-id": "9.2.11","name":"Query Dialog Enh. Pref"}},
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["dialogEnhancementPrefChange"]}}, "description": {"tc-id": "9.3.12", "name": "subscribe: Preference"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["dialogEnhancementPrefChange"]}}, "description": {"tc-id": "9.3.12", "name": "unsubscribe: Preference"}},
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["dialogEnhancementLimitChange"]}}, "description": {"tc-id": "9.3.12", "name": "subscribe: Limit Change"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["dialogEnhancementLimitChange"]}}, "description": {"tc-id": "9.3.12", "name": "unsubscribe: Limit Change"}},
+        {"request": {"method": "org.atsc.dialogEnhancement", "params": {"dialogEnhancementGain": 8}}, "description": {"tc-id": "9.7.5","name":"Dialogue Gain: 8"}},
+        {"request": {"method": "org.atsc.dialogEnhancement", "params": {"dialogEnhancementGain": 0}}, "description": {"tc-id": "9.7.5","name":"Dialogue Gain: disable:0"}},
+        {"request": {"method": "org.atsc.dialogEnhancement", "params": {"dialogEnhancementReset": true}}, "description": {"tc-id": "9.7.5","name":"Dialogue reset"}}
+    ],
+    "Audio Volume": [
+        {"request": {"method": "org.atsc.audioVolume", "params": {"audioVolume": 0.25}}, "description": {"tc-id": "9.7.4","name":"Set Volume 25%"}},
+        {"request": {"method": "org.atsc.audioVolume", "params": {"audioVolume": 0.5}}, "description": {"tc-id": "9.7.4","name":"Set Volume 50%"}},
+        {"request": {"method": "org.atsc.audioVolume", "params": {"audioVolume": 1}}, "description": {"tc-id": "9.7.4","name":"Set Volume 100%"}},
+        {"request": {"method": "org.atsc.audioVolume", "params": {"audioVolume": 0}}, "description": {"tc-id": "9.7.4","name":"Set Volume 0%/MUTE"}}
+    ],
+    "Local Content Handling": [
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["contentChange"]}}, "description": {"tc-id": "9.3.9", "name": "subscribe: local content"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["contentChange"]}}, "description": {"tc-id": "9.3.9", "name": "unsubscribe: local content"}},
+        {"request": {"method": "org.atsc.CacheRequest", "params": {"sourceURL": "https://run3tv-api-tester-app.a3fa.yottacloud.tv/cache/", "targetURL":"images/","URLs": ["A/big-image1.png", "B/big-image2.png", "C/big-image3.png"]}}, "description": {"tc-id": "9.4.1","name":"Cache Request"}},
+        {"request": {"method": "org.atsc.CacheRequest", "params": {"targetURL":"images/","URLs": ["A/big-image1.png", "B/big-image2.png", "C/big-image3.png"]}}, "description": {"tc-id": "9.4.1","name":"Check Cache"}},
+        {"request": {"method": "org.atsc.CacheRequest", "params": {"sourceURL": "https://run3tv-api-tester-app.a3fa.yottacloud.tv/cache/dash1", "targetURL":"ad1/","Period": "<Period id='0' Duration='PT60S'><AdaptationSet id='0' contentType='video' width='1920' height='1080' frameRate='15360/512' segmentAlignment='true' par='16:9'><Representation id='0' bandwidth='867104' codecs='hev1.1.6.L120.90' mimeType='video/mp4' sar='1:1'><SegmentTemplate timescale='15360' initialization='video/init-video.mp4' media='video/v-$Number$.m4s' startNumber='1' duration='15360'/></Representation></AdaptationSet><AdaptationSet id='1' contentType='audio' lang='en' segmentAlignment='true'><Representation id='1' bandwidth='106096' codecs='ac-4.02.01.00' mimeType='audio/mp4' audioSamplingRate='48000'><AudioChannelConfiguration schemeIdUri='urn:mpeg:mpegB:cicp:ChannelConfiguration' value='2'/><SegmentTemplate timescale='48000' initialization='audio/init-audio.mp4' media='audio/a1-$Number$.m4s' startNumber='1' duration='48000'/></Representation></AdaptationSet><AdaptationSet id='2' contentType='audio' lang='es' segmentAlignment='true'><Representation id='2' bandwidth='104960' codecs='ac-4.02.01.00' mimeType='audio/mp4' audioSamplingRate='48000'><AudioChannelConfiguration schemeIdUri='urn:mpeg:mpegB:cicp:ChannelConfiguration' value='2'/><SegmentTemplate timescale='48000' initialization='audio2/init-audio.mp4' media='audio2/a2-$Number$.m4s' startNumber='1' duration='48000'/></Representation></AdaptationSet></Period>"}}, "description": {"tc-id": "9.4.2","name":"DASH: Period"}},
+        {"request": {"method": "org.atsc.CacheRequest", "params": {"targetURL":"ad1/","Period": "<Period id='0' Duration='PT60S'><AdaptationSet id='0' contentType='video' width='1920' height='1080' frameRate='15360/512' segmentAlignment='true' par='16:9'><Representation id='0' bandwidth='867104' codecs='hev1.1.6.L120.90' mimeType='video/mp4' sar='1:1'><SegmentTemplate timescale='15360' initialization='video/init-video.mp4' media='video/v-$Number$.m4s' startNumber='1' duration='15360'/></Representation></AdaptationSet><AdaptationSet id='1' contentType='audio' lang='en' segmentAlignment='true'><Representation id='1' bandwidth='106096' codecs='ac-4.02.01.00' mimeType='audio/mp4' audioSamplingRate='48000'><AudioChannelConfiguration schemeIdUri='urn:mpeg:mpegB:cicp:ChannelConfiguration' value='2'/><SegmentTemplate timescale='48000' initialization='audio/init-audio.mp4' media='audio/a1-$Number$.m4s' startNumber='1' duration='48000'/></Representation></AdaptationSet><AdaptationSet id='2' contentType='audio' lang='es' segmentAlignment='true'><Representation id='2' bandwidth='104960' codecs='ac-4.02.01.00' mimeType='audio/mp4' audioSamplingRate='48000'><AudioChannelConfiguration schemeIdUri='urn:mpeg:mpegB:cicp:ChannelConfiguration' value='2'/><SegmentTemplate timescale='48000' initialization='audio2/init-audio.mp4' media='audio2/a2-$Number$.m4s' startNumber='1' duration='48000'/></Representation></AdaptationSet></Period>"}}, "description": {"tc-id": "9.4.2","name":"DASH: Period check"}},
+        {"request": {"method": "org.atsc.CacheRequest", "params": {"sourceURL": "https://run3tv-api-tester-app.a3fa.yottacloud.tv/cache/dash1", "targetURL":"ad2/","mpdFileName": "manifest.mpd"}}, "description": {"tc-id": "9.4.2","name":"DASH: MPD"}},
+        {"request": {"method": "org.atsc.CacheRequest", "params": {"targetURL":"ad2/","mpdFileName": "manifest.mpd"}}, "description": {"tc-id": "9.4.2","name":"DASH: MPD check"}},
+        {"request": {"method": "org.atsc.query.cacheUsage"}, "description": {"tc-id": "9.5","name":"Query Cache Usage"}},
+        {"request": {"method": "org.atsc.cache.markUnused", "params": {"elementUri":"images/"}}, "description": {"tc-id": "9.9","name":"Marked Unused images"}},
+        {"request": {"method": "org.atsc.cache.markUnused", "params": {"elementUri":"ad1/"}}, "description": {"tc-id": "9.9","name":"Marked Unused images"}},
+        {"request": {"method": "org.atsc.cache.markUnused", "params": {"elementUri":"ad2/"}}, "description": {"tc-id": "9.9","name":"Marked Unused images"}}
+    ],
+    "Event Stream": [
+        {"request": {"method": "org.atsc.query.rmpMediaTime"}, "description": {"tc-id": "9.14.1","name":"Query: Media Time"}},
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["rmpMediaTimeChange"]}}, "description": {"tc-id": "9.14.5", "name": "sub: Media Time"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["rmpMediaTimeChange"]}}, "description": {"tc-id": "9.14.5", "name": "unsub: Media Time"}},
+        {"request": {"method": "org.atsc.eventStream.subscribe", "params": {"schemeIdUri": "tv:eventstream.run3tv.org"}}, "description": {"tc-id": "9.6.1", "name": "Subscribe Event Stream"}},
+        {"request": {"method": "org.atsc.eventStream.subscribe", "params": {"schemeIdUri": "tv:eventstream.run3tv.org", "value": "appManagement"}}, "description": {"tc-id": "9.6.1", "name": "Subscribe Event Stream =appM"}},
+        {"request": {"method": "org.atsc.eventStream.unsubscribe", "params": {"schemeIdUri":"tv:eventstream.run3tv.org"}}, "description": {"tc-id": "9.6.2","name":"Unsubscribe Event Stream"}},
+        {"request": {"method": "org.atsc.eventStream.unsubscribe", "params": {"schemeIdUri":"tv:eventstream.run3tv.org","value": "appManagement"}}, "description": {"tc-id": "9.6.2","name":"Unsub Event Stream =appM"}},
+        {"request": {"method": "org.atsc.eventStream.subscribe", "params": {"schemeIdUri": "https://dashif.org/identifiers/vast30"}}, "description": {"tc-id": "9.6.1", "name": "Subscribe Event Stream VAST"}},
+        {"request": {"method": "org.atsc.eventStream.unsubscribe", "params": {"schemeIdUri":"https://dashif.org/identifiers/vast30"}}, "description": {"tc-id": "9.6.2","name":"Unsubscribe Event Stream VAST"}}
+    ],
+    "Video Scaling": [
+        {"request": {"method": "org.atsc.scale-position", "params": {"scaleFactor": 10.0, "xPos": 30.0, "yPos": 15.0}}, "description": {"tc-id": "9.7.2","name":"Video Scale 10%"}},
+        {"request": {"method": "org.atsc.scale-position", "params": {"scaleFactor": 25.0, "xPos": 30.0, "yPos": 15.0}}, "description": {"tc-id": "9.7.2","name":"Video Scale 25%"}},
+        {"request": {"method": "org.atsc.scale-position", "params": {"scaleFactor": 100.0, "xPos": 0.0, "yPos": 0.0}}, "description": {"tc-id": "9.7.2","name":"Video Scale 100%"}}
+    ],
+    "setRMP": [
+        {"request": {"method": "org.atsc.setRMPURL", "params": {"operation": "startRmp", "rmpUrl": "https://run3tv-api-tester-app.a3fa.yottacloud.tv/cache/dash2/manifest.mpd"}}, "description": {"tc-id": "9.7.3","name":"Set RMP"}},
+        {"request": {"method": "org.atsc.setRMPURL", "params": {"operation": "stopRmp"}}, "description": {"tc-id": "9.7.3","name":"Stop RMP"}},
+        {"request": {"method": "org.atsc.setRMPURL", "params": {"operation": "resumeService"}}, "description": {"tc-id": "9.7.3","name":"Resume Service"}}
+    ],
+    "RMP": [
+        {"request": {"method": "org.atsc.query.rmpMediaTime"}, "description": {"tc-id": "9.14.1","name":"Query: Media Time"}},
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["rmpMediaTimeChange"]}}, "description": {"tc-id": "9.14.5", "name": "sub: Media Time"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["rmpMediaTimeChange"]}}, "description": {"tc-id": "9.14.5", "name": "unsub: Media Time"}} ,  
+        {"request": {"method": "org.atsc.query.rmpWallClockTime"}, "description": {"tc-id": "9.14.2","name":"Query: Wall Clock Time"}},
+        {"request": {"method": "org.atsc.query.rmpPlaybackState"}, "description": {"tc-id": "9.14.3","name":"Query: Playback State"}},
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["rmpPlaybackStateChange"]}}, "description": {"tc-id": "9.14.6", "name": "sub: Playback State"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["rmpPlaybackStateChange"]}}, "description": {"tc-id": "9.14.6", "name": "unsub: Playback State"}},  
+        {"request": {"method": "org.atsc.query.rmpPlaybackRate"}, "description": {"tc-id": "9.14.4","name":"Query: Playback Rate"}},
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["rmpPlaybackRateChange"]}}, "description": {"tc-id": "9.14.7", "name": "sub: Playback Rate"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["rmpPlaybackRateChange"]}}, "description": {"tc-id": "9.14.7", "name": "unsub: Playback Rate"}}  
+    ],
+    "Track Selection": [
+        {"request": {"method": "org.atsc.track.selection", "params": {"selectionId": 2}}, "description": {"tc-id": "9.8","name":"Select TrackId 2"}},
+        {"request": {"method": "org.atsc.track.selection", "params": {"selectionId": 1}}, "description": {"tc-id": "9.8","name":"Select TrackId 1"}}
+    ],
+    "Application": [
+        {"request": {"method": "org.atsc.launchApp", "params": {"appId": "tv:api-tester-app-2.run3tv.org"}}, "description": {"tc-id": "9.7.6","name":"Launch App2"}}
+    ],
+    "Watermark Content Recovery": [
+        {"request": {"method": "org.atsc.query.contentRecoveryState"}, "description": {"tc-id": "9.10.1","name":"Query State"}},
+        {"request": {"method": "org.atsc.query.displayOverride"}, "description": {"tc-id": "9.10.2","name":"Query Display Override"}},
+        {"request": {"method": "org.atsc.query.recoveredComponentInfo"}, "description": {"tc-id": "9.10.3","name":"Query Component Info"}},
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["contentRecoveryStateChange"]}}, "description": {"tc-id": "9.10.4", "name": "subscribe: Watermark"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["contentRecoveryStateChange"]}}, "description": {"tc-id": "9.10.4", "name": "unsubscribe: Watermark"}},
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["recoveredComponentInfoChange"]}}, "description": {"tc-id": "9.10.5", "name": "sub: Watermark Component"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["recoveredComponentInfoChange"]}}, "description": {"tc-id": "9.10.5", "name": "unsub: Watermark Component"}}    
+    ],
+    "Filter Codes": [
+        {"request": {"method": "org.atsc.setFilterCodes", "params": {"filters": [{"filterCode" : 101},{"filterCode" : 102}]}}, "description": {"tc-id": "9.11.1","name":"Set Filter Codes"}},
+        {"request": {"method": "org.atsc.clearFilterCodes", "params": {"filters": [101,102]}}, "description": {"tc-id": "9.11.2","name":"Clear Filter Codes"}}
+    ],
+    "Request Keys": [
+        {"request": {"method": "org.atsc.request.keys", "params": {"keys": ["BAAppear","Back"]}}, "description": {"tc-id": "9.12.1","name":"Req: BAAppear Keys"}},
+        {"request": {"method": "org.atsc.relinquish.keys", "params": {"keys": []}}, "description": {"tc-id": "9.12.2","name":"Release: ALL"}},
+        {"request": {"method": "org.atsc.request.keys", "params": {"keys": ["ArrowUp","ArrowDown","ArrowRight", "ArrowLeft","Back","Select"]}}, "description": {"tc-id": "9.12.1","name":"Req: Standard Keys"}},
+        {"request": {"method": "org.atsc.relinquish.keys", "params": {"keys": ["ArrowUp","ArrowDown","ArrowRight", "ArrowLeft","Back","Select"]}}, "description": {"tc-id": "9.12.2","name":"Release: ALL"}},
+        {"request": {"method": "org.atsc.request.keys", "params": {"keys": ["Numeric"]}}, "description": {"tc-id": "9.12.1","name":"Req: Numeric Keys"}},
+        {"request": {"method": "org.atsc.relinquish.keys", "params": {"keys": ["Numeric"]}}, "description": {"tc-id": "9.12.2","name":"Rel: Numeric Keys"}},
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["requestKeyTimeout"]}}, "description": {"tc-id": "9.12.3", "name": "sub: Keys Timeout"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["requestKeyTimeout"]}}, "description": {"tc-id": "9.12.3", "name": "unsub: Keys Timeout"}}    
+    ],
+    "XLINKS": [
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["xlinkResolution"]}}, "description": {"tc-id": "9.16.1", "name": "sub: xlinks"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["xlinkResolution"]}}, "description": {"tc-id": "9.16.1", "name": "unsub: xlinks"}},
+        {"request": {"method": "org.atsc.xlinkResolution", "params": {"xlink": "xlinkResolution","mpdURL":"ads1/manifest.mpd"}}, "description": {"tc-id": "9.16.2", "name": "xlinks: local resolution"}}
+    ],
+    "DRM": [
+        {"request": {"method": "org.atsc.subscribe", "params": {"msgType": ["DRM"]}}, "description": {"tc-id": "9.15.1", "name": "sub: DRM"}},
+        {"request": {"method": "org.atsc.unsubscribe", "params": {"msgType": ["DRM"]}}, "description": {"tc-id": "9.15.1", "name": "unsub: DRM"}},
+        {"request": {"method": "org.atsc.drmOperation", "params": {"systemId": "urn:uuid:1077efec-c0b2-4d02-ace3-3c1e52e2fb4b", "service": "<notify:params.service>","message": [{"kid":"<notify:params.message[0].kid>","drmSessionId":"<notify:params.message[0].drmSessionId>","drmMsgType": "individualizationResponse", "drmData": "<DRM_URL:https://server.com/contentId/>"}]}}, "description": {"tc-id": "9.15.2", "name": "drm: individualization Request"}},
+        {"request": {"method": "org.atsc.drmOperation", "params": {"systemId": "urn:uuid:1077efec-c0b2-4d02-ace3-3c1e52e2fb4b", "service": "https://doi.org/10.5239/8A23-2B0B","message": [{"kid":"34e5db32-8625-47cd-ba06-68fca0655a72","drmSessionId":"MzRlNWRiMzItODYyNS00N2NkLWJhMDYtNjhmY2EwNjU1YTcy","drmMsgType": "serverCertificateRequest", "drmData": "<base64-encoded-serverCertificateRequest>"}]}}, "description": {"tc-id": "9.15.2", "name": "drm: serverCertificate Request"}},
+        {"request": {"method": "org.atsc.drmOperation", "params": {"systemId": "urn:uuid:1077efec-c0b2-4d02-ace3-3c1e52e2fb4b", "service": "https://doi.org/10.5239/8A23-2B0B","message": [{"kid":"34e5db32-8625-47cd-ba06-68fca0655a72","drmSessionId":"MzRlNWRiMzItODYyNS00N2NkLWJhMDYtNjhmY2EwNjU1YTcy","drmMsgType": "update", "drmData": "<base64-encoded-licenseResponse>"}]}}, "description": {"tc-id": "9.15.2", "name": "drm: license update"}},
+        {"request": {"method": "org.atsc.drmOperation", "params": {"systemId": "urn:uuid:1077efec-c0b2-4d02-ace3-3c1e52e2fb4b", "service": "https://doi.org/10.5239/8A23-2B0B","message": [{"kid":"34e5db32-8625-47cd-ba06-68fca0655a72","drmMsgType": "generateRequest", "drmData": "<notification>.<base64-encoded PSSHData>"}]}}, "description": {"tc-id": "9.15.2", "name": "drm: generate Request"}}
+    ]
+}
+
+    
+
+

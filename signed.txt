@@ -1,0 +1,17 @@
+https://www.oreilly.com/library/view/programming-internet-email/9780596802585/ch05s03s01.html
+
+
+Content-Type: multipart/signed; protocol="TYPE/STYPE";
+              micalg="MICALG"; boundary="Signed Boundary"
+
+--Signed Boundary
+Content-Type: <content type/stype>; <content parameters>
+
+<Content goes here>
+
+--Signed Boundary
+Content-Type: TYPE/STYPE
+
+<Control information goes here>
+
+--Signed Boundary--

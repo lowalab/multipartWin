@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<metadataEnvelope xmlns="urn:3gpp:metadata:2005:MBMS:envelope">
+	<item metadataURI="usbd.xml" version="0123"/>
+	<item metadataURI="stsid.xml" version="4567"/>
+	<item metadataURI="mpd.xml" version="1232"/>
+</metadataEnvelope>
+
