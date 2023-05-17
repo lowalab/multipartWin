@@ -37,14 +37,14 @@ public:
 		removeSemicolon(value);
 		return true;
 	}
-private:
-	std::string trimString(const std::string& str) {
+
+	static std::string trimString(const std::string& str) {
 		const std::string whitespace = " \t\n\r\f\v";
 		size_t start = str.find_first_not_of(whitespace);
 		size_t end = str.find_last_not_of(whitespace);
 		return (start != std::string::npos && end != std::string::npos) ? str.substr(start, end - start + 1) : "";
 	}
-
+private:
 	void removeQuotes(std::string& str) {
 		str.erase(std::remove(str.begin(), str.end(), '\"'), str.end());
 	}
@@ -57,8 +57,9 @@ private:
 };
 
 class MultiPartParser {
-public:
+private:
 	std::string header;
+public:
 	std::string body;
 	std::vector<HeaderItem> headerItems;
 	std::vector<MultiPartParser> subParts;
@@ -88,7 +89,7 @@ public:
 		header = "";
 		for (const auto& line : lines)
 		{
-			std::string temp = trimString(line);
+			std::string temp = HeaderItem::trimString(line);
 			if (temp.empty()) continue;
 			header += temp;
 			if (temp.back() != ';') header += "\n";
@@ -142,15 +143,6 @@ public:
 
 		return lines;
 	}
-
-	std::string trimString(const std::string& str) {
-		std::string t = " \t\n\r\f\v";
-		std::string temp = str;
-		temp.erase(0, str.find_first_not_of(t));
-		temp.erase(temp.find_last_not_of(t) + 1);
-		return temp;
-	}
-
 };
 
 
@@ -166,7 +158,7 @@ void createFolder(const std::string& strFilename)
 int main() {
 
 	std::string strPackageName = "App.pkg"; // run3tv_app.multipart    App.pkg    sls.pkg
-	std::ifstream file(strPackageName, std::ios::binary); 
+	std::ifstream file(strPackageName, std::ios::binary);
 	std::stringstream buffer;
 	buffer << file.rdbuf();
 
