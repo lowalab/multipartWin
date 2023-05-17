@@ -1,7 +1,4 @@
-﻿// multipartWin.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
-//
-
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <algorithm>
@@ -14,63 +11,48 @@ public:
 	std::string name;
 	std::string value;
 	std::map<std::string, std::string> attributes;
-	// 여러개의 조각으로 나눈다.
-	std::vector<std::string> split(std::string& input, char delimiter) {
-		std::vector<std::string> answer;
-		std::stringstream ss(input);
-		std::string temp;
-		std::string t = " \t\n\r\f\v";
-		while (getline(ss, temp, delimiter)) {
-			temp.erase(0, temp.find_first_not_of(t));
-			temp.erase(temp.find_last_not_of(t) + 1);
-			answer.push_back(temp);
-		}
-		return answer;
-	}
-	// 2개로 나눈다.
-	std::vector<std::string> divide(std::string& input, char delimiter) {
-		std::vector<std::string> answer;
-		size_t pos = input.find(delimiter);
-		if (pos < 1 || pos >= input.size() - 1)
-		{
-			answer.push_back(input);
-			return answer;
-		}
-		std::string temp;
-		temp = input.substr(0, pos);
-		std::string t = " \t\n\r\f\v";
-		temp.erase(0, temp.find_first_not_of(t));
-		temp.erase(temp.find_last_not_of(t) + 1);
-		if (!temp.empty()) answer.push_back(temp);
-		temp = input.substr(pos + 1, input.size() - pos - 1);
-		temp.erase(0, temp.find_first_not_of(t));
-		temp.erase(temp.find_last_not_of(t) + 1);
-		if (!temp.empty()) answer.push_back(temp);
-		return answer;
-	}
 
-	bool parse(std::string data)
-	{
-		std::vector<std::string> splitData = divide(data, ':');
-		if (splitData.size() != 2) return false;
-		name = splitData[0];
-		// 앞 뒤 따옴표 제거
-		name.erase(0, name.find_first_not_of('"'));
-		name.erase(name.find_last_not_of('"') + 1);
-		std::vector<std::string> attributeData = split(splitData[1], ';');
-		if (attributeData.size() >= 1) value = attributeData[0];
-		for (int i = 1; i < attributeData.size(); i++)
-		{
-			std::vector<std::string> attributeItem = divide(attributeData[i], '=');
-			if (attributeItem.size() == 2)
-			{
-				// 앞 뒤 따옴표 제거
-				attributeItem[1].erase(0, attributeItem[1].find_first_not_of('"'));
-				attributeItem[1].erase(attributeItem[1].find_last_not_of('"') + 1);
-				attributes.insert({ attributeItem[0], attributeItem[1] });
+	bool parse(const std::string& data) {
+		size_t colonPos = data.find(':');
+		if (colonPos == std::string::npos)
+			return false;
+
+		name = trimString(data.substr(0, colonPos));
+		value = trimString(data.substr(colonPos + 1));
+
+		std::istringstream attributeStream(value);
+		std::string attribute;
+		while (std::getline(attributeStream, attribute, ';')) {
+			size_t equalsPos = attribute.find('=');
+			if (equalsPos != std::string::npos) {
+				std::string attrName = trimString(attribute.substr(0, equalsPos));
+				std::string attrValue = trimString(attribute.substr(equalsPos + 1));
+
+				if (!attrName.empty() && !attrValue.empty()) {
+					removeQuotes(attrValue);
+					attributes.insert({ attrName, attrValue });
+				}
 			}
 		}
+		removeSemicolon(value);
 		return true;
+	}
+private:
+	std::string trimString(const std::string& str) {
+		const std::string whitespace = " \t\n\r\f\v";
+		size_t start = str.find_first_not_of(whitespace);
+		size_t end = str.find_last_not_of(whitespace);
+		return (start != std::string::npos && end != std::string::npos) ? str.substr(start, end - start + 1) : "";
+	}
+
+	void removeQuotes(std::string& str) {
+		str.erase(std::remove(str.begin(), str.end(), '\"'), str.end());
+	}
+
+	void removeSemicolon(std::string& str) {
+		size_t semicolonPos = str.find(";");
+		if (semicolonPos != std::string::npos)
+			str.erase(semicolonPos);
 	}
 };
 
@@ -79,124 +61,100 @@ public:
 	std::string header;
 	std::string body;
 	std::vector<HeaderItem> headerItems;
-	std::vector<MultiPartParser> sub;
+	std::vector<MultiPartParser> subParts;
 
-	void replaceAll(const std::string& pattern, const std::string& replace) {
-		std::string::size_type pos = 0;
-		while ((pos = header.find(pattern)) != std::string::npos)
+	MultiPartParser(const std::string& data) {
+		size_t headerEndPos = data.find("\r\n\r\n");
+		if (headerEndPos != std::string::npos)
+		{ 
+			header = data.substr(0, headerEndPos);
+			body = data.substr(headerEndPos + 4);
+		}
+		else
 		{
-			header.replace(pos, pattern.size(), replace);
+			headerEndPos = data.find("\n\n");
+			if (headerEndPos != std::string::npos)
+			{
+				header = data.substr(0, headerEndPos);
+				body = data.substr(headerEndPos + 2);
+			}
+			else
+			{
+				return;
+			}
 		}
-	}
-
-	std::vector<std::string> splitHeader(std::string& input, char delimiter) {
-		std::vector<std::string> answer;
-		std::stringstream ss(input);
-		std::string temp;
-
-		while (getline(ss, temp, delimiter)) {
-			answer.push_back(temp);
-		}
-
-		return answer;
-	}
-
-	MultiPartParser(const std::string& data)
-	{
-		//std::cout << "MultiPartParser constructor\n";
-		// 줄바꿈 문자를 찾는다.
-		size_t pos_LF = data.find('\n');
-		if (pos_LF == std::string::npos)
-		{
-			std::cout << "LF not find" << std::endl;
-			return;
-		}
-		// 줄바꿈 문자의 종류 결정
-		std::string strNewLine = "\n";
-		if (data.substr(pos_LF - 1, 1) == "\r") strNewLine = "\r\n";
-		//std::cout << "New Line String : " << ((strNewLine.size() == 1) ? "LF" : "CRLF") << std::endl;
-		// 헤더정보 분리
-		size_t pos_HeadEnd = data.find(strNewLine + strNewLine);
-		if (pos_HeadEnd == std::string::npos)
-		{
-			std::cout << "Header not find" << std::endl;
-			return;
-		}
-		header = data.substr(0, pos_HeadEnd);
-		body = data.substr(pos_HeadEnd + strNewLine.size() * 2, data.length() - strNewLine.size() * 2 - pos_HeadEnd);
-
 		// 헤더 줄 별로 trim 해서 재조립
-		std::vector<std::string> lines = splitHeader(header, '\n');
+		std::vector<std::string> lines = splitStringToLines(header);
 		header = "";
 		for (const auto& line : lines)
 		{
-			std::string t = " \t\n\r\f\v";
-			std::string temp = line;
-			temp.erase(0, line.find_first_not_of(t));
-			temp.erase(temp.find_last_not_of(t) + 1);
-			if (header.length() > 0) header += "\n";
+			std::string temp = trimString(line);
+			if (temp.empty()) continue;
 			header += temp;
+			if (temp.back() != ';') header += "\n";
 		}
-		// 헤더에서 ";\n" 을 ";" 로 교체
-		replaceAll(";\n", ";");
-		// 줄단위로 자르기
-		lines = splitHeader(header, '\n');
-		for (const auto& line : lines)
-		{
+
+		lines = splitStringToLines(header);
+		for (const auto& line : lines) {
 			HeaderItem item;
-			if (item.parse(line) == true)
-			{
+			if (item.parse(line))
 				headerItems.push_back(item);
-				//item.print();
-			}
 		}
-		header = "";
 
-		for (const auto& headerItem : headerItems)
-		{
-			if (headerItem.name != "Content-Type") continue;
-			// 비교하기 위해 소문자료 변환 Multipart or multipart
-			std::string strContentType = headerItem.value;
-			std::transform(strContentType.begin(), strContentType.end(), strContentType.begin(), [](unsigned char c) { return std::tolower(c); });
-			if (strContentType == "multipart/related")
-			{
-				auto boun = headerItem.attributes.find("boundary");
-				if (boun == headerItem.attributes.end()) continue;
-				std::string strBoundary = boun->second;
-				processMultipartRelated("--" + strBoundary, strNewLine);
-				break;
+		for (const auto& item : headerItems) {
+			if (findStringIgnoreCase(item.name,"Content-Type") && findStringIgnoreCase(item.value, "multipart")) {
+				auto boundaryAttr = item.attributes.find("boundary");
+				if (boundaryAttr != item.attributes.end()) {
+					std::string boundary = "--" + boundaryAttr->second;
+					processMultipart(boundary);
+				}
 			}
 		}
 	}
-	~MultiPartParser()
-	{
-		//std::cout << "MultiPartParser destructor\n";
+
+	bool findStringIgnoreCase(const std::string& input, const std::string& searchString) {
+		std::string inputCopy = input;
+		std::transform(inputCopy.begin(), inputCopy.end(), inputCopy.begin(), ::tolower);
+		std::string searchStringCopy = searchString;
+		std::transform(searchStringCopy.begin(), searchStringCopy.end(), searchStringCopy.begin(), ::tolower);
+
+		return inputCopy.find(searchStringCopy) != std::string::npos;
 	}
 
-	void processMultipartRelated(std::string strBoundary, std::string strNewLine)
-	{
-		size_t start_pos = 0;
-		size_t end_pos = 0;
-		int nCount = 0;
-
-		while (true)
-		{
-			end_pos = body.find(strBoundary, start_pos);
-			if (end_pos == std::string::npos) break;
-			nCount++;
-			if (start_pos > 0)
-			{
-				MultiPartParser multi(body.substr(start_pos, end_pos - start_pos));
-				sub.emplace_back(multi);
-			}
-			start_pos = end_pos + strBoundary.size() + strNewLine.size();
+	void processMultipart(const std::string& boundary) {
+		size_t startPos = 0;
+		size_t endPos = 0;
+		while ((endPos = body.find(boundary, startPos)) != std::string::npos) {
+			MultiPartParser subPart(body.substr(startPos, endPos - startPos));
+			subParts.push_back(subPart);
+			startPos = endPos + boundary.length();
 		}
-		body = "";
 	}
+
+	std::vector<std::string> splitStringToLines(const std::string& input) {
+		std::vector<std::string> lines;
+		std::istringstream iss(input);
+
+		std::string line;
+		while (std::getline(iss, line)) {
+			lines.push_back(line);
+		}
+
+		return lines;
+	}
+
+	std::string trimString(const std::string& str) {
+		std::string t = " \t\n\r\f\v";
+		std::string temp = str;
+		temp.erase(0, str.find_first_not_of(t));
+		temp.erase(temp.find_last_not_of(t) + 1);
+		return temp;
+	}
+
 };
 
 
-void createFolder(std::string &strFilename)
+void createFolder(const std::string& strFilename)
 {
 	size_t pos = strFilename.find_last_of("/");
 	if (pos == std::string::npos) return;
@@ -209,25 +167,28 @@ void createFolder(std::string &strFilename)
 	}
 }
 
-int main()
-{
-	std::string strPackageName = "sls.pkg"; // run3tv_app.multipart   // App.pkg // sls.pkg
-	std::ifstream file(strPackageName, std::ios::binary);
-	std::stringstream ss;
-	ss << file.rdbuf();
 
-	MultiPartParser parser(ss.str());
+int main() {
 
-	std::cout << std::endl << "----------------result----------------" << std::endl << std::endl;
+	std::string strPackageName = "sls.pkg";
+	std::ifstream file(strPackageName, std::ios::binary); // run3tv_app.multipart   // App.pkg // sls.pkg
+	std::stringstream buffer;
+	buffer << file.rdbuf();
+	std::string multipartData = buffer.str();
 
+	MultiPartParser parser(multipartData);
 
+	// Access parsed data
 	for (const auto& item : parser.headerItems) {
-		std::cout << item.name << ":" << item.value << std::endl;
-		for (const auto& attribute : item.attributes) {
-			std::cout << "\t" << attribute.first << "=" << attribute.second << std::endl;
+		std::cout << "Name: " << item.name << std::endl;
+		std::cout << "Value: " << item.value << std::endl;
+		for (const auto& attr : item.attributes) {
+			std::cout << "Attribute: " << attr.first << ", Value: " << attr.second << std::endl;
 		}
+		std::cout << std::endl;
 	}
-	for (const auto& s : parser.sub) {
+
+	for (const auto& s : parser.subParts) {
 		for (const auto& item : s.headerItems) {
 			std::cout << item.name << ":" << item.value << std::endl;
 			for (const auto& attribute : item.attributes) {
@@ -244,4 +205,6 @@ int main()
 			}
 		}
 	}
+
+	return 0;
 }
