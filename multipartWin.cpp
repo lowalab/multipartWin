@@ -169,9 +169,8 @@ int main() {
 	std::ifstream file(strPackageName, std::ios::binary); 
 	std::stringstream buffer;
 	buffer << file.rdbuf();
-	std::string multipartData = buffer.str();
 
-	MultiPartParser parser(multipartData);
+	MultiPartParser parser(buffer.str());
 
 	// Access parsed data
 	for (const auto& item : parser.headerItems) {
