@@ -159,18 +159,13 @@ void createFolder(const std::string& strFilename)
 	size_t pos = strFilename.find_last_of("/");
 	if (pos == std::string::npos) return;
 	std::string strFolder = strFilename.substr(0, pos);
-	if (!std::filesystem::exists(strFolder)) {
-		if (!std::filesystem::create_directories(strFolder)) {
-			std::cout << "Failed to create folder: " << strFolder << std::endl;
-			return;
-		}
-	}
+	std::filesystem::create_directories(strFilename.substr(0, pos));
 }
 
 
 int main() {
 
-	std::string strPackageName = "sls.pkg";
+	std::string strPackageName = "App.pkg";
 	std::ifstream file(strPackageName, std::ios::binary); // run3tv_app.multipart   // App.pkg // sls.pkg
 	std::stringstream buffer;
 	buffer << file.rdbuf();
