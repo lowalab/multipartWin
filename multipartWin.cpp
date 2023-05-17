@@ -66,7 +66,7 @@ public:
 	MultiPartParser(const std::string& data) {
 		size_t headerEndPos = data.find("\r\n\r\n");
 		if (headerEndPos != std::string::npos)
-		{ 
+		{
 			header = data.substr(0, headerEndPos);
 			body = data.substr(headerEndPos + 4);
 		}
@@ -102,7 +102,7 @@ public:
 		}
 
 		for (const auto& item : headerItems) {
-			if (findStringIgnoreCase(item.name,"Content-Type") && findStringIgnoreCase(item.value, "multipart")) {
+			if (findStringIgnoreCase(item.name, "Content-Type") && findStringIgnoreCase(item.value, "multipart")) {
 				auto boundaryAttr = item.attributes.find("boundary");
 				if (boundaryAttr != item.attributes.end()) {
 					std::string boundary = "--" + boundaryAttr->second;
@@ -165,8 +165,8 @@ void createFolder(const std::string& strFilename)
 
 int main() {
 
-	std::string strPackageName = "App.pkg";
-	std::ifstream file(strPackageName, std::ios::binary); // run3tv_app.multipart   // App.pkg // sls.pkg
+	std::string strPackageName = "App.pkg"; // run3tv_app.multipart    App.pkg    sls.pkg
+	std::ifstream file(strPackageName, std::ios::binary); 
 	std::stringstream buffer;
 	buffer << file.rdbuf();
 	std::string multipartData = buffer.str();
