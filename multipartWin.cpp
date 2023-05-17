@@ -14,12 +14,9 @@ public:
 
 	bool parse(const std::string& data) {
 		size_t colonPos = data.find(':');
-		if (colonPos == std::string::npos)
-			return false;
-
+		if (colonPos == std::string::npos) return false;
 		name = trimString(data.substr(0, colonPos));
 		value = trimString(data.substr(colonPos + 1));
-
 		std::istringstream attributeStream(value);
 		std::string attribute;
 		while (std::getline(attributeStream, attribute, ';')) {
@@ -27,7 +24,6 @@ public:
 			if (equalsPos != std::string::npos) {
 				std::string attrName = trimString(attribute.substr(0, equalsPos));
 				std::string attrValue = trimString(attribute.substr(equalsPos + 1));
-
 				if (!attrName.empty() && !attrValue.empty()) {
 					removeQuotes(attrValue);
 					attributes.insert({ attrName, attrValue });
@@ -51,8 +47,7 @@ private:
 
 	void removeSemicolon(std::string& str) {
 		size_t semicolonPos = str.find(";");
-		if (semicolonPos != std::string::npos)
-			str.erase(semicolonPos);
+		if (semicolonPos != std::string::npos) str.erase(semicolonPos);
 	}
 };
 
@@ -74,41 +69,30 @@ public:
 		else
 		{
 			headerEndPos = data.find("\n\n");
-			if (headerEndPos != std::string::npos)
-			{
-				header = data.substr(0, headerEndPos);
-				body = data.substr(headerEndPos + 2);
-			}
-			else
-			{
-				return;
-			}
+			if (headerEndPos == std::string::npos) return;
+			header = data.substr(0, headerEndPos);
+			body = data.substr(headerEndPos + 2);
 		}
-		// 헤더 줄 별로 trim 해서 재조립
-		std::vector<std::string> lines = splitStringToLines(header);
-		header = "";
-		for (const auto& line : lines)
-		{
-			std::string temp = HeaderItem::trimString(line);
-			if (temp.empty()) continue;
-			header += temp;
-			if (temp.back() != ';') header += "\n";
-		}
-
-		lines = splitStringToLines(header);
-		for (const auto& line : lines) {
+		std::istringstream iss(header);
+		std::string strHeaderLine;
+		std::string line;
+		while (std::getline(iss, line)) {
+			line = HeaderItem::trimString(line);
+			if (line.empty()) continue;
+			if (line.back() == ';')
+			{
+				strHeaderLine += line;
+				continue;
+			}
 			HeaderItem item;
-			if (item.parse(line))
-				headerItems.push_back(item);
+			if (item.parse(strHeaderLine + line)) headerItems.push_back(item);
+			strHeaderLine = "";
 		}
 
 		for (const auto& item : headerItems) {
 			if (findStringIgnoreCase(item.name, "Content-Type") && findStringIgnoreCase(item.value, "multipart")) {
 				auto boundaryAttr = item.attributes.find("boundary");
-				if (boundaryAttr != item.attributes.end()) {
-					std::string boundary = "--" + boundaryAttr->second;
-					processMultipart(boundary);
-				}
+				if (boundaryAttr != item.attributes.end()) processMultipart("--" + boundaryAttr->second);
 			}
 		}
 	}
@@ -123,25 +107,12 @@ public:
 	}
 
 	void processMultipart(const std::string& boundary) {
-		size_t startPos = 0;
-		size_t endPos = 0;
+		size_t startPos = 0, endPos = 0;
 		while ((endPos = body.find(boundary, startPos)) != std::string::npos) {
 			MultiPartParser subPart(body.substr(startPos, endPos - startPos));
 			subParts.push_back(subPart);
 			startPos = endPos + boundary.length();
 		}
-	}
-
-	std::vector<std::string> splitStringToLines(const std::string& input) {
-		std::vector<std::string> lines;
-		std::istringstream iss(input);
-
-		std::string line;
-		while (std::getline(iss, line)) {
-			lines.push_back(line);
-		}
-
-		return lines;
 	}
 };
 
